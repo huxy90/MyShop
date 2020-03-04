@@ -3,4 +3,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    
+    <string name="title">仿网易严选</string>
+    <string name="up">上一页</string>
+    <string name="down">下一页</string>
 </resources>
