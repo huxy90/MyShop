@@ -48,10 +48,13 @@ public class TopicAdapter extends RecyclerView.Adapter{
 
     @Override
     public int getItemCount() {
+        Log.i("TAG","getItemCount---------------");
         return list.size();
     }
 
     public void addData(List<TopicBean.DataBeanX.DataBean> result){
+        Log.i("TAG","addData---------------");
+        list.clear();
         list.addAll(result);
         notifyDataSetChanged();
     }

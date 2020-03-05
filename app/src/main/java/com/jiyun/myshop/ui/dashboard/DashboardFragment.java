@@ -42,18 +42,20 @@ public class DashboardFragment extends BaseFragment<TopicConstract.Presenter> im
     @Override
     protected void initView() {
         mRlView = getView().findViewById(R.id.rl_View);
-//        mTvUp = getView().findViewById(R.id.tv_up);
-//        mTvDown = getView().findViewById(R.id.tv_down);
-    }
-
-    @Override
-    protected void initData() {
+        mTvUp = getView().findViewById(R.id.tv_up);
+        mTvDown = getView().findViewById(R.id.tv_down);
         mRlView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false));
         List<TopicBean.DataBeanX.DataBean> list = new ArrayList<>();
         adapter = new TopicAdapter(context);
         mRlView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void initData() {
         presenter.getTopicData(page, size);
     }
+
+
 
     @Override
     public void getTopicDataReturn(TopicBean bean) {

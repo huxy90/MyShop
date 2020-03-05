@@ -1,8 +1,10 @@
 package com.jiyun.myshop;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.jiyun.myshop.ui.login.LoginActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications,R.id.navigation_own)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -33,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
 //        //toolbar
 //        mToolBar.setTitle(R.string.title);
 //        setSupportActionBar(mToolBar);
+
+        login();
+    }
+
+    private void login() {
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
 }

@@ -3,8 +3,14 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    
+
     <string name="title">仿网易严选</string>
     <string name="up">上一页</string>
     <string name="down">下一页</string>
+    <string name="title_activity_login_activity">LoginActivity</string>
+    <string name="title_activity_register_activity">RegisterActivity</string>
+    <string name="login">登录</string>
+    <string name="reg">注册</string>
+    <string name="register">注册账号</string>
+    <string name="wjpwd">忘记密码</string>
 </resources>
