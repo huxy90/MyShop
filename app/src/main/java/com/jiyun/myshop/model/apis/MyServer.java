@@ -29,4 +29,6 @@ public interface MyServer {
     @FormUrlEncoded
     Flowable<AuthBean> register(@Field("nickname") String nickname,@Field("password") String password);
 
+
+
 }

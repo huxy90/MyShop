@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jiyun.myshop.R;
 import com.jiyun.myshop.base.BaseActivity;
@@ -58,7 +59,7 @@ public class RegisterActivity extends BaseActivity<RegisterConstract.Presenter> 
        if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pwd) && pwd.equals(repwd)){
            presenter.register(name,pwd);
        }else {
-
+           Toast.makeText(this,"输入错误",Toast.LENGTH_LONG).show();
        }
     }
 
@@ -69,6 +70,8 @@ public class RegisterActivity extends BaseActivity<RegisterConstract.Presenter> 
              intent.putExtra("nickname",bean.getData().getUserInfo().getNickname());
              setResult(110,intent);
              finish();
-         }
+         }{
+            Toast.makeText(this,bean.getErrmsg(),Toast.LENGTH_LONG).show();
+        }
     }
 }

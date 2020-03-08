@@ -77,6 +77,7 @@ public class LoginActivity extends BaseActivity<LoginConstract.Presenter> implem
     //注册
     private void register() {
         Intent intent = new Intent(this,RegisterActivity.class);
+//        startActivity(intent);
         startActivityForResult(intent,100);
     }
 

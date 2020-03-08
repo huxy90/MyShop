@@ -1,7 +1,9 @@
 package com.jiyun.myshop;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.view.Window;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jiyun.myshop.ui.login.LoginActivity;
@@ -15,12 +17,12 @@ import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
 
-//    private Toolbar mToolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();//隐藏标题栏
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -31,12 +33,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-//        mToolBar = findViewById(R.id.toolBar);
-//        //toolbar
-//        mToolBar.setTitle(R.string.title);
-//        setSupportActionBar(mToolBar);
 
-        login();
+        //login();
     }
 
     private void login() {
