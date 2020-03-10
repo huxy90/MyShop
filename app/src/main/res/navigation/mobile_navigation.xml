@@ -24,8 +24,14 @@
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
+        android:id="@+id/navigation_cart"
+        android:name="com.jiyun.myshop.ui.notifications.NotificationsFragment"
+        android:label="@string/title_cart"
+        tools:layout="@layout/fragment_cart" />
+
+    <fragment
         android:id="@+id/navigation_own"
         android:name="com.jiyun.myshop.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:label="@string/title_own"
+        tools:layout="@layout/fragment_own" />
 </navigation>

@@ -65,4 +65,9 @@ dependencies {
     implementation 'com.youth.banner:banner:1.4.10'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    //支持vLayout库
+    compile('com.alibaba.android:vlayout:1.2.6@aar') {
+        transitive = true
+    }
+
 }

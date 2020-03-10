@@ -44,9 +44,9 @@ public class DashboardFragment extends BaseFragment<TopicConstract.Presenter> im
         mRlView = getView().findViewById(R.id.rl_View);
         mTvUp = getView().findViewById(R.id.tv_up);
         mTvDown = getView().findViewById(R.id.tv_down);
-        mRlView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false));
+        mRlView.setLayoutManager(new LinearLayoutManager(context));//LinearLayoutManager.VERTICAL,false
         List<TopicBean.DataBeanX.DataBean> list = new ArrayList<>();
-        adapter = new TopicAdapter(context);
+        adapter = new TopicAdapter(list,context);
         mRlView.setAdapter(adapter);
     }
 
@@ -55,10 +55,8 @@ public class DashboardFragment extends BaseFragment<TopicConstract.Presenter> im
         presenter.getTopicData(page, size);
     }
 
-
-
     @Override
     public void getTopicDataReturn(TopicBean bean) {
-        adapter.addData(bean.getData().getData());
+        adapter.updateList(bean.getData().getData());
     }
 }

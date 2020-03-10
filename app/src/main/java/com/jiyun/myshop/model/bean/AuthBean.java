@@ -2,7 +2,9 @@ package com.jiyun.myshop.model.bean;
 
 import android.os.Parcelable;
 
-public class AuthBean {
+import java.io.Serializable;
+
+public class AuthBean implements Serializable {
 
     /**
      * errno : 0

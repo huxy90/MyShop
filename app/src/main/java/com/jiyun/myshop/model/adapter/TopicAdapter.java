@@ -1,25 +1,43 @@
 package com.jiyun.myshop.model.adapter;
 
+
 import android.content.Context;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jiyun.myshop.R;
+import com.jiyun.myshop.base.BaseAdapter;
 import com.jiyun.myshop.model.bean.TopicBean;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
+public class TopicAdapter extends BaseAdapter {
 
+
+    public TopicAdapter(List mDatas, Context mContext) {
+        super(mDatas, mContext);
+    }
+
+    @Override
+    public int getLayout() {
+        return R.layout.item;
+    }
+
+    @Override
+    protected void bindView(VH vh, Object data) {
+        TopicBean.DataBeanX.DataBean bean = (TopicBean.DataBeanX.DataBean)data;
+        ImageView iv = (ImageView)vh.getViewById(R.id.iv);
+        TextView title = (TextView)vh.getViewById(R.id.title);
+        TextView subtitle = (TextView)vh.getViewById(R.id.subtitle);
+        TextView price_info = (TextView)vh.getViewById(R.id.price_info);
+        title.setText(bean.getTitle());
+        subtitle.setText(bean.getSubtitle());
+        price_info.setText(bean.getPrice_info()+"元起");
+        Glide.with(mContext).load(bean.getScene_pic_url()).into(iv);
+    }
+}
+/*
 public class TopicAdapter extends RecyclerView.Adapter{
     private Context context;
     private List<TopicBean.DataBeanX.DataBean> list = new ArrayList<>();
@@ -78,3 +96,4 @@ public class TopicAdapter extends RecyclerView.Adapter{
         }
     }
 }
+*/
