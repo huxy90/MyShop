@@ -1,5 +1,6 @@
 package com.jiyun.myshop.model.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class HomeBean {
@@ -357,7 +358,7 @@ public class HomeBean {
             }
         }
 
-        public static class BrandListBean {
+        public static class BrandListBean implements Serializable {
             /**
              * id : 1026000
              * name : CK制造商

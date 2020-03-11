@@ -36,6 +36,9 @@ import com.jiyun.myshop.ui.notifications.adapter.CatalogByIdAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 分类
+ */
 public class NotificationsFragment extends BaseFragment<CatalogConstract.Presenter> implements CatalogConstract.View, VerticalTabLayout.OnTabSelectedListener {
 
     VerticalTabLayout mTab;
@@ -70,13 +73,22 @@ public class NotificationsFragment extends BaseFragment<CatalogConstract.Present
         rlAdapter = new CatalogAdapter(rlist,context);
         rlView.setLayoutManager(new GridLayoutManager(context,3));
         rlView.setAdapter(rlAdapter);
+        rlByIdAdapter = new CatalogByIdAdapter(rByIdlist,context);
         mTab.addOnTabSelectedListener(this);
+
 
         //item的点击事件
         rlAdapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseAdapter.VH vh, int position) {
+                 Toast.makeText(context,position+"--",Toast.LENGTH_LONG).show();
+            }
+        });
 
+        rlByIdAdapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseAdapter.VH vh, int position) {
+                Toast.makeText(context,position+"-ddd-",Toast.LENGTH_LONG).show();
             }
         });
 
@@ -108,9 +120,9 @@ public class NotificationsFragment extends BaseFragment<CatalogConstract.Present
         tv_frontname.setText(bean.getData().getCurrentCategory().getFront_name());
         tv_title.setText(bean.getData().getCurrentCategory().getName()+"分类");
         if(rlByIdAdapter == null){
-            rByIdlist.clear();
-            rByIdlist.addAll(bean.getData().getCurrentCategory().getSubCategoryList());
-            rlByIdAdapter = new CatalogByIdAdapter(rByIdlist,context);
+//            rByIdlist.clear();
+//            rByIdlist.addAll(bean.getData().getCurrentCategory().getSubCategoryList());
+//            rlByIdAdapter = new CatalogByIdAdapter(rByIdlist,context);
             rlView.setAdapter(rlByIdAdapter);
         }else {
             rlByIdAdapter.updateList(bean.getData().getCurrentCategory().getSubCategoryList());

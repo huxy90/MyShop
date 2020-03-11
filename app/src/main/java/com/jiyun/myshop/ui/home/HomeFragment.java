@@ -1,6 +1,7 @@
 package com.jiyun.myshop.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -70,7 +71,10 @@ public class HomeFragment extends BaseFragment<HomeConstract.Presenter> implemen
         bAdapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseAdapter.VH vh, int position) {
-                Toast.makeText(context,position+"--",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(context,BrandActivity.class);
+                intent.putExtra("bean",bList.get(position));
+                startActivity(intent);
+                //Toast.makeText(context,position+"--",Toast.LENGTH_LONG).show();
             }
         });
     }
