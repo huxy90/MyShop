@@ -61,12 +61,12 @@ public class HomeAdapter extends BaseMultiItemQuickAdapter<HomeBean.HomeListBean
         }
     }
     private void initChannel(BaseViewHolder helper, HomeBean.HomeListBean item) {
-        RecyclerView rlView = helper.getView(R.id.recy_channel);
-        if(rlView.getAdapter() == null){
-            rlView.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
-            ChannelAdapter adapter = new ChannelAdapter(R.layout.layout_item_channel,item);
-            adapter.bindToRecyclerView(rlView);
-        }
+        //RecyclerView rlView = helper.getView(R.id.recy_channel);
+        //if(rlView.getAdapter() == null){
+            //rlView.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+            //ChannelAdapter adapter = new ChannelAdapter(R.layout.layout_item_channel,item);
+            //adapter.bindToRecyclerView(rlView);
+       // }
     }
     private void initBrand(BaseViewHolder helper, HomeBean.DataBean.BrandListBean data) {
         Glide.with(mContext).load(data.getList_pic_url()).into((ImageView)helper.getView(R.id.img_brand));
