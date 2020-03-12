@@ -1,5 +1,6 @@
 package com.jiyun.myshop.ui.notifications;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,14 +82,18 @@ public class NotificationsFragment extends BaseFragment<CatalogConstract.Present
         rlAdapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseAdapter.VH vh, int position) {
-                 Toast.makeText(context,position+"--",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(context, CategoryActivity.class);
+                intent.putExtra("id",rlist.get(position).getId());
+                startActivity(intent);
             }
         });
 
         rlByIdAdapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseAdapter.VH vh, int position) {
-                Toast.makeText(context,position+"-ddd-",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(context, CategoryActivity.class);
+                intent.putExtra("id",rByIdlist.get(position).getId());
+                startActivity(intent);
             }
         });
 

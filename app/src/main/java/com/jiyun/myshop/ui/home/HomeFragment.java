@@ -3,6 +3,121 @@ package com.jiyun.myshop.ui.home;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.jiyun.myshop.R;
+import com.jiyun.myshop.base.BaseAdapter;
+import com.jiyun.myshop.base.BaseFragment;
+import com.jiyun.myshop.interfaces.home.HomeConstract;
+import com.jiyun.myshop.model.bean.HomeBean;
+import com.jiyun.myshop.presenter.home.HomePresenter;
+import com.jiyun.myshop.ui.home.adapter.BrandAdapter;
+import com.jiyun.myshop.ui.home.adapter.HomeAdapter;
+import com.jiyun.myshop.ui.home.adapter.HotAdapter;
+import com.jiyun.myshop.ui.home.adapter.NewGoodsAdapter;
+import com.youth.banner.Banner;
+import com.youth.banner.loader.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+public class HomeFragment extends BaseFragment<HomeConstract.Presenter> implements HomeConstract.View {
+
+    RecyclerView rl_View;
+    List<HomeBean.HomeListBean> list;
+    HomeAdapter homeAdapter;
+//    private BrandAdapter bAdapter;
+//    private NewGoodsAdapter nAdapter;
+//    private HotAdapter hAdapter;
+
+    @Override
+    protected int getLayout() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    protected HomeConstract.Presenter createPresenter() {
+        return new HomePresenter();
+    }
+
+    @Override
+    protected void initView() {
+        rl_View = (RecyclerView)getView().findViewById(R.id.rl_View);
+
+        list = new ArrayList<>();
+        rl_View.setLayoutManager(new GridLayoutManager(context,2));
+        homeAdapter = new HomeAdapter(list);
+        homeAdapter.bindToRecyclerView(rl_View);
+        //监听计算当前条目占用的列表
+        homeAdapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(GridLayoutManager gridLayoutManager, int i) {
+                int type = list.get(i).getItemType();
+                switch (type){
+                    case HomeBean.HomeListBean.TYPE_BANNER:
+                    case HomeBean.HomeListBean.TYPE_TITLE:
+                    case HomeBean.HomeListBean.TYPE_CHANNEL:
+                    case HomeBean.HomeListBean.TYPE_HOTGOOD:
+                    case HomeBean.HomeListBean.TYPE_TOPIC:
+                    case HomeBean.HomeListBean.TYPE_VIEW_LINE:
+                        return 2;
+                    case HomeBean.HomeListBean.TYPE_BRAND:
+                    case HomeBean.HomeListBean.TYPE_NEWGOOD:
+                    case HomeBean.HomeListBean.TYPE_CATEGORY:
+                        return 1;
+                }
+                return 0;
+            }
+        });
+
+    }
+
+    @Override
+    protected void initData() {
+        presenter.getHomeData();
+    }
+
+    @Override
+    public void getHomeDataReturn(List<HomeBean.HomeListBean> result) {
+        addHeader(result.remove(0));
+        list.addAll(result);
+        homeAdapter.notifyDataSetChanged();
+    }
+
+    private void addHeader(HomeBean.HomeListBean head){
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_item_banner,null);
+        Banner banner = view.findViewById(R.id.banner);
+        List<String> imgs = new ArrayList<>();
+        for (HomeBean.DataBean.BannerBean item : (List<HomeBean.DataBean.BannerBean>) head.data) {
+            imgs.add(item.getImage_url());
+        }
+        banner.tag = "true";
+        banner.setImageLoader(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, Object path, ImageView imageView) {
+                Glide.with(context).load(path).dontAnimate().into(imageView);
+            }
+        });
+        banner.setImages(imgs);
+        banner.start();
+        homeAdapter.addHeaderView(view);
+    }
+}
+
+
+ /*
+  package com.jiyun.myshop.ui.home;
+
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -105,93 +220,5 @@ public class HomeFragment extends BaseFragment<HomeConstract.Presenter> implemen
 }
 
 
- /*package com.jiyun.myshop.ui.home;
 
-import android.widget.Toast;
-
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.alibaba.android.vlayout.DelegateAdapter;
-import com.alibaba.android.vlayout.VirtualLayoutManager;
-import com.alibaba.android.vlayout.layout.FixLayoutHelper;
-import com.alibaba.android.vlayout.layout.FloatLayoutHelper;
-import com.alibaba.android.vlayout.layout.GridLayoutHelper;
-import com.jiyun.myshop.R;
-import com.jiyun.myshop.base.BaseAdapter;
-import com.jiyun.myshop.base.BaseFragment;
-import com.jiyun.myshop.interfaces.home.HomeConstract;
-import com.jiyun.myshop.model.bean.HomeBean;
-import com.jiyun.myshop.presenter.home.HomePresenter;
-import com.jiyun.myshop.ui.home.adapter.BrandAdapter;
-import com.jiyun.myshop.ui.home.adapter.GridHelperAdapter;
-import com.jiyun.myshop.ui.home.adapter.HotAdapter;
-import com.jiyun.myshop.ui.home.adapter.NewGoodsAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-
-
-public class HomeFragment extends BaseFragment<HomeConstract.Presenter> implements HomeConstract.View {
-
-    RecyclerView rl_view;
-    private BrandAdapter bAdapter;
-    private NewGoodsAdapter nAdapter;
-    private HotAdapter hAdapter;
-    private GridHelperAdapter gAdapter;
-
-    @Override
-    protected int getLayout() {
-        return R.layout.fragment_home;
-    }
-
-    @Override
-    protected HomeConstract.Presenter createPresenter() {
-        return new HomePresenter();
-    }
-
-    @Override
-    protected void initView() {
-        rl_view = (RecyclerView) getView().findViewById(R.id.rl_View);
-        RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
-        rl_view.setRecycledViewPool(viewPool);
-        viewPool.setMaxRecycledViews(0, 10);
-        //设置布局管理器
-        VirtualLayoutManager layoutManager = new VirtualLayoutManager(context);
-        rl_view.setLayoutManager(layoutManager);
-        DelegateAdapter adapters = new DelegateAdapter(layoutManager, true);
-        GridLayoutHelper gridHelper = new GridLayoutHelper(2);
-        gridHelper.setMarginTop(30);
-        //设置垂直方向条目的间隔
-        gridHelper.setVGap(2);
-        //设置水平方向条目的间隔
-        gridHelper.setHGap(2);
-        //自动填充满布局
-        gridHelper.setAutoExpand(true);
-        List<HomeBean.DataBean.BrandListBean> bList = new ArrayList<>();
-        gAdapter = new GridHelperAdapter(bList, gridHelper,context);
-        adapters.addAdapter(gAdapter);
-        rl_view.setAdapter(adapters);
-
-//        bAdapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(BaseAdapter.VH vh, int position) {
-//                Toast.makeText(context, position + "--", Toast.LENGTH_LONG).show();
-//            }
-//        });
-    }
-
-    @Override
-    protected void initData() {
-        presenter.getHomeData();
-    }
-
-    @Override
-    public void getHomeDataReturn(HomeBean result) {
-        gAdapter.updateList(result.getData().getBrandList());
-        //刷新品牌制作商列表
-//        bAdapter.updateMoreList(result.getData().getBrandList());
-//        //刷新新品首发列表
-//        nAdapter.updateList(result.getData().getNewGoodsList());
-//        hAdapter.updateList(result.getData().getHotGoodsList());
-    }
-}*/
+ */

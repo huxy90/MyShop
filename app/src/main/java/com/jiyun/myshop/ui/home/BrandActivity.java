@@ -74,7 +74,6 @@ public class BrandActivity extends BaseActivity<BrandConstract.Presenter> implem
               public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                   if(page < totalPage){
                        page++;
-                       Log.e("TAG",bean.getId()+"--"+page+"--page-----");
                        presenter.getBrandData(bean.getId()+"",page+"",size+"");
                   }else {
                       Toast.makeText(BrandActivity.this, "没有更多数据了", Toast.LENGTH_SHORT).show();
