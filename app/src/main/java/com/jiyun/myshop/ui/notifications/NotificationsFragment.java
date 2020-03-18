@@ -34,6 +34,7 @@ import com.jiyun.myshop.presenter.notification.CatalogPresenter;
 import com.jiyun.myshop.ui.notifications.adapter.CatalogAdapter;
 import com.jiyun.myshop.ui.notifications.adapter.CatalogByIdAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +49,6 @@ public class NotificationsFragment extends BaseFragment<CatalogConstract.Present
     TextView tv_title;
     RecyclerView rlView;
     MyTabAdapter adapter;
-    CatalogAdapter rlAdapter;
     CatalogByIdAdapter rlByIdAdapter = null;
     List<CatalogByIdBean.DataBean.CurrentCategoryBean.SubCategoryListBean> rByIdlist = new ArrayList<>();
 
@@ -69,30 +69,17 @@ public class NotificationsFragment extends BaseFragment<CatalogConstract.Present
         tv_frontname = getView().findViewById(R.id.tv_frontname);
         tv_title = getView().findViewById(R.id.tv_title);
         rlView = getView().findViewById(R.id.rl_View);
-
-        List<CatalogBean.DataBean.CurrentCategoryBean.SubCategoryListBean> rlist = new ArrayList<>();
-        rlAdapter = new CatalogAdapter(rlist,context);
         rlView.setLayoutManager(new GridLayoutManager(context,3));
-        rlView.setAdapter(rlAdapter);
         rlByIdAdapter = new CatalogByIdAdapter(rByIdlist,context);
+        rlView.setAdapter(rlByIdAdapter);
         mTab.addOnTabSelectedListener(this);
-
-
-        //item的点击事件
-        rlAdapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseAdapter.VH vh, int position) {
-                Intent intent = new Intent(context, CategoryActivity.class);
-                intent.putExtra("id",rlist.get(position).getId());
-                startActivity(intent);
-            }
-        });
 
         rlByIdAdapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseAdapter.VH vh, int position) {
                 Intent intent = new Intent(context, CategoryActivity.class);
-                intent.putExtra("id",rByIdlist.get(position).getId());
+                intent.putExtra("data", (Serializable) rlByIdAdapter.mDatas);
+                intent.putExtra("position",position);
                 startActivity(intent);
             }
         });
@@ -116,7 +103,8 @@ public class NotificationsFragment extends BaseFragment<CatalogConstract.Present
         Glide.with(context).load(list.get(0).getWap_banner_url()).into(iv);
         tv_frontname.setText(list.get(0).getFront_name());
         tv_title.setText(list.get(0).getName()+"分类");
-        rlAdapter.updateList(bean.getData().getCurrentCategory().getSubCategoryList());
+
+        presenter.getCatalogById(list.get(0).getId()+"");
     }
 
     @Override
@@ -124,18 +112,13 @@ public class NotificationsFragment extends BaseFragment<CatalogConstract.Present
         Glide.with(context).load(bean.getData().getCurrentCategory().getWap_banner_url()).into(iv);
         tv_frontname.setText(bean.getData().getCurrentCategory().getFront_name());
         tv_title.setText(bean.getData().getCurrentCategory().getName()+"分类");
-        if(rlByIdAdapter == null){
-//            rByIdlist.clear();
-//            rByIdlist.addAll(bean.getData().getCurrentCategory().getSubCategoryList());
-//            rlByIdAdapter = new CatalogByIdAdapter(rByIdlist,context);
-            rlView.setAdapter(rlByIdAdapter);
-        }else {
-            rlByIdAdapter.updateList(bean.getData().getCurrentCategory().getSubCategoryList());
-        }
+
+        rlByIdAdapter.updateList(bean.getData().getCurrentCategory().getSubCategoryList());
     }
 
     @Override
     public void onTabSelected(TabView tab, int position) {
+        int id = list.get(position).getId();
         presenter.getCatalogById(list.get(position).getId()+"");
     }
 

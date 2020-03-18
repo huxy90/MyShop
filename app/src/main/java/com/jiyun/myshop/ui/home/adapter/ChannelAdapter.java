@@ -12,16 +12,13 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 
-public class ChannelAdapter extends BaseQuickAdapter<HomeBean.DataBean.TopicListBean, BaseViewHolder> {
-    public ChannelAdapter(int layoutResId, @Nullable List<HomeBean.DataBean.TopicListBean> data) {
+public class ChannelAdapter extends BaseQuickAdapter<HomeBean.DataBean.ChannelBean, BaseViewHolder> {
+    public ChannelAdapter(int layoutResId, @Nullable List<HomeBean.DataBean.ChannelBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, HomeBean.DataBean.TopicListBean item) {
-        Glide.with(mContext).load(item.getItem_pic_url()).into((ImageView) helper.getView(R.id.img_topic));
-        helper.setText(R.id.txt_name,item.getTitle());
-        helper.setText(R.id.txt_price,"￥"+item.getPrice_info());
-        helper.setText(R.id.txt_des,item.getSubtitle());
+    protected void convert(BaseViewHolder helper, HomeBean.DataBean.ChannelBean item) {
+        helper.setText(R.id.txt_name,item.getName());
     }
 }

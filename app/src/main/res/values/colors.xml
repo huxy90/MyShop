@@ -11,4 +11,5 @@
     <color name="red">#ff0000</color>
 
     <color name="color_gray_line">#DDDDDD</color>
+    <color name="linebg">#E8E8E8</color>
 </resources>

@@ -1,28 +1,37 @@
 package com.jiyun.myshop.ui.notifications;
 
 import android.content.Intent;
+import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.jiyun.myshop.R;
 import com.jiyun.myshop.base.BaseActivity;
-import com.jiyun.myshop.interfaces.notification.CategoryTopConstract;
+import com.jiyun.myshop.base.BaseAdapter;
+import com.jiyun.myshop.interfaces.notification.CategoryBoConstract;
+import com.jiyun.myshop.model.bean.CatalogBean;
+import com.jiyun.myshop.model.bean.CatalogByIdBean;
 import com.jiyun.myshop.model.bean.CategoryBottom;
-import com.jiyun.myshop.model.bean.CategoryTop;
-import com.jiyun.myshop.presenter.notification.CategoryTopPresenter;
+import com.jiyun.myshop.presenter.notification.CategoryBoPresenter;
+import com.jiyun.myshop.ui.notifications.adapter.CategoryAdapter;
+import com.jiyun.myshop.utils.GridDivider;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**
  * 分类 详情
  */
-public class CategoryActivity extends BaseActivity<CategoryTopConstract.Presenter> implements CategoryTopConstract.View {
+public class CategoryActivity extends BaseActivity<CategoryBoConstract.Presenter> implements CategoryBoConstract.View {
 
     @BindView(R.id.srl)
     SmartRefreshLayout srl;
@@ -36,7 +45,10 @@ public class CategoryActivity extends BaseActivity<CategoryTopConstract.Presente
     RecyclerView rl_View;
     int page = 1;
     int size = 10;
-    int total = 0;
+    private int mCategoryId;
+    int mPosition;
+    List<CatalogByIdBean.DataBean.CurrentCategoryBean.SubCategoryListBean> mList;
+    CategoryAdapter adapter;
 
     @Override
     public int getLayout() {
@@ -44,40 +56,99 @@ public class CategoryActivity extends BaseActivity<CategoryTopConstract.Presente
     }
 
     @Override
-    protected CategoryTopConstract.Presenter createPresenter() {
-        return new CategoryTopPresenter();
+    protected CategoryBoConstract.Presenter createPresenter() {
+        return new CategoryBoPresenter();
     }
 
-    String id;
     @Override
     protected void initData() {
-        id = getIntent().getStringExtra("id");
-        presenter.getCategoryTop(id);
-        presenter.getCategoryBottom(id,page,size);
+       presenter.getCategoryBottom(mCategoryId,page,size);
     }
 
     @Override
     protected void initView() {
+        //获取上个页面传递的数据
+        mList = (List<CatalogByIdBean.DataBean.CurrentCategoryBean.SubCategoryListBean>) getIntent().getSerializableExtra("data");
+        mPosition = getIntent().getIntExtra("position",0);//上个页面item的position
+        mCategoryId = mList.get(mPosition).getId();//分类id
+        //tablayout
+        for (int i = 0; i < mList.size();i++){
+            CatalogByIdBean.DataBean.CurrentCategoryBean.SubCategoryListBean bean = mList.get(i);
+            tabLayout.addTab(tabLayout.newTab().setText(bean.getName()));
+        }
+        //选中我们点击的tab，并滑动到屏幕内
+        tabLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                 tabLayout.getTabAt(mPosition).select();
+            }
+        },100);
 
-        hideHeader();
+        //tablayout的切换监听
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mPosition = tab.getPosition();
+                mCategoryId = mList.get(mPosition).getId();
+                page = 1;
+                adapter.mDatas.clear();
+                adapter.notifyDataSetChanged();
+                //请求数据
+                presenter.getCategoryBottom(mCategoryId,page,size);
+
+                setHeadData();//设置标题
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        //2.recyclerview
+        ArrayList<CategoryBottom.DataBeanX.DataBean> list = new ArrayList<>();
+        rl_View.setLayoutManager(new GridLayoutManager(this,2));
+//        rl_View.addItemDecoration(new GridDivider(this,5,R.color.linebg));
+        adapter = new CategoryAdapter(list,this);
+        rl_View.setAdapter(adapter);
+
+        setHeadData();//设置标题数据
+
         srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if(page < total){
-                    page++;
-                    presenter.getCategoryBottom(id,page,size);
-                }else {
-                    Toast.makeText(CategoryActivity.this, "没有更多数据了", Toast.LENGTH_SHORT).show();
-                }
+                page++;
+                presenter.getCategoryBottom(mCategoryId,page,size);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
+                adapter.mDatas.clear();
                 page = 1;
-                presenter.getCategoryBottom(id,page,size);
+                presenter.getCategoryBottom(mCategoryId,page,size);
             }
         });
+
+        //item的监听
+        adapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseAdapter.VH vh, int position) {
+                Intent intent = new Intent(CategoryActivity.this,GoodInfoActivity.class);
+                intent.putExtra("id",list.get(position).getId());
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void getCategoryBoReturn(CategoryBottom bean) {
+        adapter.updateMoreList(bean.getData().getData());
+        hideHeader();
     }
 
     private void hideHeader() {
@@ -85,13 +156,9 @@ public class CategoryActivity extends BaseActivity<CategoryTopConstract.Presente
         srl.finishLoadMore();
     }
 
-    @Override
-    public void getCategoryTopReturn(CategoryTop bean) {
-
-    }
-
-    @Override
-    public void getCategoryBoReturn(CategoryBottom bean) {
-
+    private void setHeadData(){
+        CatalogByIdBean.DataBean.CurrentCategoryBean.SubCategoryListBean bean = mList.get(mPosition);
+        tv_name.setText(bean.getFront_name());
+        tv_desc.setText(bean.getFront_desc());
     }
 }

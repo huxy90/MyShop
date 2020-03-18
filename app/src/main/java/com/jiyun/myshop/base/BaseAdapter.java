@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
 
-    private List<T> mDatas;
+    public List<T> mDatas;
     protected Context mContext;
     private OnItemClickListener clickListener;
 

@@ -24,6 +24,10 @@
         <activity
             android:name=".ui.home.BrandActivity"></activity>
         <activity
+            android:name=".ui.notifications.CategoryActivity"></activity>
+        <activity
+            android:name=".ui.notifications.GoodInfoActivity"></activity>
+        <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
             <intent-filter>

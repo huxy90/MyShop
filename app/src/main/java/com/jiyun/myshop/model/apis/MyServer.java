@@ -5,7 +5,8 @@ import com.jiyun.myshop.model.bean.BrandBean;
 import com.jiyun.myshop.model.bean.CatalogBean;
 import com.jiyun.myshop.model.bean.CatalogByIdBean;
 import com.jiyun.myshop.model.bean.CategoryBottom;
-import com.jiyun.myshop.model.bean.CategoryTop;
+import com.jiyun.myshop.model.bean.GoodInfoBean;
+import com.jiyun.myshop.model.bean.GoodInfoBo;
 import com.jiyun.myshop.model.bean.HomeBean;
 import com.jiyun.myshop.model.bean.TopicBean;
 
@@ -45,12 +46,15 @@ public interface MyServer {
     @GET("catalog/current")
     Flowable<CatalogByIdBean> getCatalogById(@Query("id") String id);
 
-    //分类--商品分类顶部导航
-    @GET("category")
-    Flowable<CategoryTop> getCategoryTop(@Query("id") String id);
-
-    //分类--商品分类顶部导航对应的列表数据
+    //商品详情列表数据
     @GET("goods/list")
-    Flowable<CategoryBottom> getCategoryBottom(@Query("id") String id, @Query("page") int page, @Query("size") int size);
+    Flowable<CategoryBottom> getCategoryBottom(@Query("categoryId") int categoryId, @Query("page") int page, @Query("size") int size);
 
+    //商品购买详情页
+    @GET("goods/detail")
+    Flowable<GoodInfoBean> getGoodInfo(@Query("id") int id);
+
+    //商品购买详情页底部商品列表数据
+    @GET("goods/related")
+    Flowable<GoodInfoBo> getGoodInfoBo(@Query("id") int id);
 }

@@ -22,14 +22,31 @@ public class HomeAdapter extends BaseMultiItemQuickAdapter<HomeBean.HomeListBean
         super(data);
         this.list = data;
         addItemType(HomeBean.HomeListBean.TYPE_BANNER, R.layout.layout_item_banner);
-        addItemType(HomeBean.HomeListBean.TYPE_CHANNEL,R.layout.layout_item_channel);
+        addItemType(HomeBean.HomeListBean.TYPE_CHANNEL,R.layout.layout_channel_recy);
+
+        addItemType(HomeBean.HomeListBean.TYPE_VIEW_LINE,R.layout.layout_view_line);//
+
         addItemType(HomeBean.HomeListBean.TYPE_TITLE,R.layout.layout_item_title);
         addItemType(HomeBean.HomeListBean.TYPE_BRAND,R.layout.layout_item_brand);
+
+        addItemType(HomeBean.HomeListBean.TYPE_TITLE,R.layout.layout_item_title);//
+
         addItemType(HomeBean.HomeListBean.TYPE_NEWGOOD,R.layout.layout_item_newgood);
+
+        addItemType(HomeBean.HomeListBean.TYPE_VIEW_LINE,R.layout.layout_view_line);//
+        addItemType(HomeBean.HomeListBean.TYPE_TITLE,R.layout.layout_item_title);//
+
         addItemType(HomeBean.HomeListBean.TYPE_HOTGOOD,R.layout.layout_item_hotgood);
+
+        addItemType(HomeBean.HomeListBean.TYPE_VIEW_LINE,R.layout.layout_view_line);//
+        addItemType(HomeBean.HomeListBean.TYPE_TITLE,R.layout.layout_item_title);//
+
         addItemType(HomeBean.HomeListBean.TYPE_TOPIC,R.layout.layout_topic_recy);
+
+        addItemType(HomeBean.HomeListBean.TYPE_VIEW_LINE,R.layout.layout_view_line);//
+
         addItemType(HomeBean.HomeListBean.TYPE_CATEGORY,R.layout.layout_item_category);
-        addItemType(HomeBean.HomeListBean.TYPE_VIEW_LINE,R.layout.layout_view_line);
+       // addItemType(HomeBean.HomeListBean.TYPE_VIEW_LINE,R.layout.layout_view_line);
     }
 
     @Override
@@ -37,7 +54,7 @@ public class HomeAdapter extends BaseMultiItemQuickAdapter<HomeBean.HomeListBean
 
         switch (item.getItemType()){
             case HomeBean.HomeListBean.TYPE_CHANNEL:
-                initChannel(helper,item);
+                initChannel(helper,(List<HomeBean.DataBean.ChannelBean>)item.data);
                 break;
             case HomeBean.HomeListBean.TYPE_BRAND:
                 initBrand(helper,(HomeBean.DataBean.BrandListBean)item.data);
@@ -60,13 +77,13 @@ public class HomeAdapter extends BaseMultiItemQuickAdapter<HomeBean.HomeListBean
 
         }
     }
-    private void initChannel(BaseViewHolder helper, HomeBean.HomeListBean item) {
-        //RecyclerView rlView = helper.getView(R.id.recy_channel);
-        //if(rlView.getAdapter() == null){
-            //rlView.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
-            //ChannelAdapter adapter = new ChannelAdapter(R.layout.layout_item_channel,item);
-            //adapter.bindToRecyclerView(rlView);
-       // }
+    private void initChannel(BaseViewHolder helper, List<HomeBean.DataBean.ChannelBean> item) {
+        RecyclerView rlView = helper.getView(R.id.recy_channel);
+        if(rlView.getAdapter() == null){
+            rlView.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+            ChannelAdapter adapter = new ChannelAdapter(R.layout.layout_item_channel,item);
+            adapter.bindToRecyclerView(rlView);
+        }
     }
     private void initBrand(BaseViewHolder helper, HomeBean.DataBean.BrandListBean data) {
         Glide.with(mContext).load(data.getList_pic_url()).into((ImageView)helper.getView(R.id.img_brand));

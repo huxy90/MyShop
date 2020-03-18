@@ -76,6 +76,13 @@ public class HomeFragment extends BaseFragment<HomeConstract.Presenter> implemen
                 return 0;
             }
         });
+        homeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                int itemViewType = adapter.getItemViewType(position);
+                Toast.makeText(context,itemViewType+"---"+position,Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 

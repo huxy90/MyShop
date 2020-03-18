@@ -25,13 +25,13 @@
 
     <fragment
         android:id="@+id/navigation_cart"
-        android:name="com.jiyun.myshop.ui.notifications.NotificationsFragment"
+        android:name="com.jiyun.myshop.ui.cart.CartFragment"
         android:label="@string/title_cart"
         tools:layout="@layout/fragment_cart" />
 
     <fragment
         android:id="@+id/navigation_own"
-        android:name="com.jiyun.myshop.ui.notifications.NotificationsFragment"
+        android:name="com.jiyun.myshop.ui.own.OwnFragment"
         android:label="@string/title_own"
         tools:layout="@layout/fragment_own" />
 </navigation>
