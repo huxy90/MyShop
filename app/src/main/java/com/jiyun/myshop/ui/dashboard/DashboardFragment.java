@@ -1,11 +1,14 @@
 package com.jiyun.myshop.ui.dashboard;
 
+import android.content.Intent;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.jiyun.myshop.R;
+import com.jiyun.myshop.base.BaseAdapter;
 import com.jiyun.myshop.base.BaseFragment;
 import com.jiyun.myshop.interfaces.topic.TopicConstract;
+import com.jiyun.myshop.interfaces.topic.TopicDetailConstract;
 import com.jiyun.myshop.model.adapter.TopicAdapter;
 import com.jiyun.myshop.model.bean.TopicBean;
 import com.jiyun.myshop.presenter.topic.TopicPresenter;
@@ -18,6 +21,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
+/**
+ * 专题
+ */
 public class DashboardFragment extends BaseFragment<TopicConstract.Presenter> implements TopicConstract.View {
 
     int page = 1;
@@ -48,6 +54,15 @@ public class DashboardFragment extends BaseFragment<TopicConstract.Presenter> im
         List<TopicBean.DataBeanX.DataBean> list = new ArrayList<>();
         adapter = new TopicAdapter(list,context);
         mRlView.setAdapter(adapter);
+        //item监听
+        adapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseAdapter.VH vh, int position) {
+                Intent intent = new Intent(context, TopicDetailActivity.class);
+                intent.putExtra("id",list.get(position).getId());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

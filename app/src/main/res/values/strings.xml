@@ -31,4 +31,19 @@
             margin:auto;
         }
     </string>
+    <string name="css_goods2">
+        html,body{
+            padding:0px;
+            margin:0px;
+            text-align:center;
+        }
+        img{
+            width:100%;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            margin:auto;
+        }
+    </string>
 </resources>

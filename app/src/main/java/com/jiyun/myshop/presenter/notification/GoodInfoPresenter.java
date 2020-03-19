@@ -4,6 +4,7 @@ import com.jiyun.myshop.base.BasePresenter;
 import com.jiyun.myshop.common.ResponseSubscriber;
 import com.jiyun.myshop.interfaces.notification.GoodInfoConstract;
 import com.jiyun.myshop.model.HttpManager;
+import com.jiyun.myshop.model.bean.AddCartBean;
 import com.jiyun.myshop.model.bean.GoodInfoBean;
 import com.jiyun.myshop.model.bean.GoodInfoBo;
 import com.jiyun.myshop.utils.RxUtils;
@@ -35,6 +36,22 @@ public class GoodInfoPresenter extends BasePresenter<GoodInfoConstract.View> imp
                     public void onNext(GoodInfoBo bean) {
                         if(bean.getErrno() == 0){
                             mView.getGoodInfoBoReturn(bean);
+                        }else {
+                            super.onNext(bean);
+                        }
+                    }
+                }));
+    }
+
+    @Override
+    public void addCart(int goodsId, int number, int productId) {
+        addSubcribe(HttpManager.getInstance().myServer().addCart(goodsId,number,productId)
+                .compose(RxUtils.rxScheduler())
+                .subscribeWith(new ResponseSubscriber<AddCartBean>(mView){
+                    @Override
+                    public void onNext(AddCartBean bean) {
+                        if(bean.getErrno() == 0){
+                            mView.addCartReturn(bean);
                         }else {
                             super.onNext(bean);
                         }

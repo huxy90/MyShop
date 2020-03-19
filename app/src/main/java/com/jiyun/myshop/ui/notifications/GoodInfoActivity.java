@@ -20,6 +20,7 @@ import com.jiyun.myshop.R;
 import com.jiyun.myshop.base.BaseActivity;
 import com.jiyun.myshop.base.BaseAdapter;
 import com.jiyun.myshop.interfaces.notification.GoodInfoConstract;
+import com.jiyun.myshop.model.bean.AddCartBean;
 import com.jiyun.myshop.model.bean.GoodInfoBean;
 import com.jiyun.myshop.model.bean.GoodInfoBo;
 import com.jiyun.myshop.presenter.notification.GoodInfoPresenter;
@@ -134,14 +135,19 @@ public class GoodInfoActivity extends BaseActivity<GoodInfoConstract.Presenter> 
 
                 break;
             case R.id.tv_addcart://加入购物车
-
+                int goodsid = getIntent().getIntExtra("id",0);
+                int num = Integer.parseInt(et_num.getText().toString().trim());
+                int productid = mBean.getData().getProductList().get(0).getId();
+                presenter.addCart(goodsid,num,productid);
                 break;
         }
 
     }
 
+    GoodInfoBean mBean;
     @Override
     public void getGoodInfoReturn(GoodInfoBean bean) {
+        mBean = bean;
         iniPopupWindow(bean);
         //轮播图
         List<GoodInfoBean.DataBeanX.GalleryBean> gallery = bean.getData().getGallery();
@@ -191,6 +197,12 @@ public class GoodInfoActivity extends BaseActivity<GoodInfoConstract.Presenter> 
     @Override
     public void getGoodInfoBoReturn(GoodInfoBo bo) {
         adapter.updateMoreList(bo.getData().getGoodsList());
+    }
+
+    //添加到购物车
+    @Override
+    public void addCartReturn(AddCartBean bean) {
+          pwMyPopWindow.dismiss();
     }
 
     EditText et_num;//购买个数
