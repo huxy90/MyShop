@@ -145,14 +145,17 @@ import com.jiyun.myshop.R;
 import com.jiyun.myshop.base.BaseAdapter;
 import com.jiyun.myshop.base.BaseFragment;
 import com.jiyun.myshop.interfaces.home.HomeConstract;
+import com.jiyun.myshop.model.bean.CatalogByIdBean;
 import com.jiyun.myshop.model.bean.HomeBean;
 import com.jiyun.myshop.presenter.home.HomePresenter;
+import com.jiyun.myshop.ui.dashboard.TopicDetailActivity;
 import com.jiyun.myshop.ui.home.adapter.BrandAdapter;
 import com.jiyun.myshop.ui.home.adapter.ChannelAdapter;
 import com.jiyun.myshop.ui.home.adapter.HomeAdapter;
 import com.jiyun.myshop.ui.home.adapter.HotAdapter;
 import com.jiyun.myshop.ui.home.adapter.NewGoodsAdapter;
 import com.jiyun.myshop.ui.home.adapter.TopicAdapter;
+import com.jiyun.myshop.ui.notifications.CategoryActivity;
 import com.jiyun.myshop.ui.notifications.GoodInfoActivity;
 import com.jiyun.myshop.utils.MaxRecyclerView;
 import com.youth.banner.Banner;
@@ -226,7 +229,7 @@ public class HomeFragment extends BaseFragment<HomeConstract.Presenter> implemen
         rl_brand.setLayoutManager(new GridLayoutManager(context,2));
         rl_brand.setAdapter(bAdapter);
         //新品首发
-        List<HomeBean.DataBean.BrandListBean> nList = new ArrayList<>();
+        List<HomeBean.DataBean.NewGoodsListBean> nList = new ArrayList<>();
         nAdapter = new NewGoodsAdapter(nList,context);
         rl_newGooods.setLayoutManager(new GridLayoutManager(context,2));
         rl_newGooods.setAdapter(nAdapter);
@@ -275,11 +278,49 @@ public class HomeFragment extends BaseFragment<HomeConstract.Presenter> implemen
                 }
             }
         });
+        //channel
+        cAdapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseAdapter.VH vh, int position) {
+//                Intent intent = new Intent(context, CategoryActivity.class);
+//                intent.putExtra("cid",cList.get(position).getId());
+//                intent.putExtra("position",position);
+//                startActivity(intent);
+            }
+        });
+        //品牌商
         bAdapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseAdapter.VH vh, int position) {
                 Intent intent = new Intent(context,BrandActivity.class);
                 intent.putExtra("bean",bList.get(position));
+                startActivity(intent);
+            }
+        });
+        //新品
+        nAdapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseAdapter.VH vh, int position) {
+                Intent intent = new Intent(context,GoodInfoActivity.class);
+                intent.putExtra("id",nList.get(position).getId());
+                startActivity(intent);
+            }
+        });
+        //人气推荐
+        hAdapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseAdapter.VH vh, int position) {
+                Intent intent = new Intent(context,GoodInfoActivity.class);
+                intent.putExtra("id",hList.get(position).getId());
+                startActivity(intent);
+            }
+        });
+        //专题
+        tAdapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseAdapter.VH vh, int position) {
+                Intent intent = new Intent(context, TopicDetailActivity.class);
+                intent.putExtra("id",tList.get(position).getId());
                 startActivity(intent);
             }
         });

@@ -78,6 +78,8 @@ public class NotificationsFragment extends BaseFragment<CatalogConstract.Present
             @Override
             public void onItemClick(BaseAdapter.VH vh, int position) {
                 Intent intent = new Intent(context, CategoryActivity.class);
+               // CatalogByIdBean.DataBean.CurrentCategoryBean.SubCategoryListBean bean = (CatalogByIdBean.DataBean.CurrentCategoryBean.SubCategoryListBean) rlByIdAdapter.mDatas;
+                //intent.putExtra("cid",rByIdlist.get(0).getId());
                 intent.putExtra("data", (Serializable) rlByIdAdapter.mDatas);
                 intent.putExtra("position",position);
                 startActivity(intent);

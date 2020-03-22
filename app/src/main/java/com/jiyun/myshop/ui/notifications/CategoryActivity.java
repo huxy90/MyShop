@@ -1,7 +1,8 @@
 package com.jiyun.myshop.ui.notifications;
 
 import android.content.Intent;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -9,12 +10,10 @@ import com.jiyun.myshop.R;
 import com.jiyun.myshop.base.BaseActivity;
 import com.jiyun.myshop.base.BaseAdapter;
 import com.jiyun.myshop.interfaces.notification.CategoryBoConstract;
-import com.jiyun.myshop.model.bean.CatalogBean;
 import com.jiyun.myshop.model.bean.CatalogByIdBean;
 import com.jiyun.myshop.model.bean.CategoryBottom;
 import com.jiyun.myshop.presenter.notification.CategoryBoPresenter;
 import com.jiyun.myshop.ui.notifications.adapter.CategoryAdapter;
-import com.jiyun.myshop.utils.GridDivider;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -47,8 +45,27 @@ public class CategoryActivity extends BaseActivity<CategoryBoConstract.Presenter
     int size = 10;
     private int mCategoryId;
     int mPosition;
+    //List<CategoryBottom.DataBeanX.FilterCategoryBean> mList;
     List<CatalogByIdBean.DataBean.CurrentCategoryBean.SubCategoryListBean> mList;
     CategoryAdapter adapter;
+//    Handler handler = new Handler(){
+//        @Override
+//        public void handleMessage(@NonNull Message msg) {
+//            //tablayout显示
+//            for (int i = 0; i < mList.size();i++){
+//                CategoryBottom.DataBeanX.FilterCategoryBean fBean = mList.get(i);
+//                tabLayout.addTab(tabLayout.newTab().setText(fBean.getName()));
+//            }
+//            setHeadData();
+//            //选中我们点击的tab，并滑动到屏幕内
+//            tabLayout.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    tabLayout.getTabAt(mPosition).select();
+//                }
+//            },100);
+//        }
+//    };
 
     @Override
     public int getLayout() {
@@ -70,19 +87,19 @@ public class CategoryActivity extends BaseActivity<CategoryBoConstract.Presenter
         //获取上个页面传递的数据
         mList = (List<CatalogByIdBean.DataBean.CurrentCategoryBean.SubCategoryListBean>) getIntent().getSerializableExtra("data");
         mPosition = getIntent().getIntExtra("position",0);//上个页面item的position
+        //mCategoryId = getIntent().getIntExtra("cid",0);
         mCategoryId = mList.get(mPosition).getId();//分类id
         //tablayout
         for (int i = 0; i < mList.size();i++){
             CatalogByIdBean.DataBean.CurrentCategoryBean.SubCategoryListBean bean = mList.get(i);
             tabLayout.addTab(tabLayout.newTab().setText(bean.getName()));
         }
-        //选中我们点击的tab，并滑动到屏幕内
         tabLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                 tabLayout.getTabAt(mPosition).select();
-            }
-        },100);
+                @Override
+                public void run() {
+                    tabLayout.getTabAt(mPosition).select();
+                }
+            },100);
 
         //tablayout的切换监听
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -149,6 +166,11 @@ public class CategoryActivity extends BaseActivity<CategoryBoConstract.Presenter
     public void getCategoryBoReturn(CategoryBottom bean) {
         adapter.updateMoreList(bean.getData().getData());
         hideHeader();
+        //tablayout显示
+//        bean.getData().getFilterCategory().remove(0);
+//        mList = bean.getData().getFilterCategory();
+//        handler.sendEmptyMessage(0);
+
     }
 
     private void hideHeader() {
@@ -158,7 +180,7 @@ public class CategoryActivity extends BaseActivity<CategoryBoConstract.Presenter
 
     private void setHeadData(){
         CatalogByIdBean.DataBean.CurrentCategoryBean.SubCategoryListBean bean = mList.get(mPosition);
-        tv_name.setText(bean.getFront_name());
+        tv_name.setText(bean.getName());
         tv_desc.setText(bean.getFront_desc());
     }
 }

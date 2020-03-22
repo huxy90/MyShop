@@ -1,5 +1,6 @@
 package com.jiyun.myshop.ui.home;
 
+import android.content.Intent;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,11 +9,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.jiyun.myshop.R;
 import com.jiyun.myshop.base.BaseActivity;
+import com.jiyun.myshop.base.BaseAdapter;
 import com.jiyun.myshop.interfaces.home.BrandConstract;
 import com.jiyun.myshop.model.bean.BrandBean;
 import com.jiyun.myshop.model.bean.HomeBean;
 import com.jiyun.myshop.presenter.home.BrandPresenter;
 import com.jiyun.myshop.ui.home.adapter.BrandListAdapter;
+import com.jiyun.myshop.ui.notifications.GoodInfoActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -89,6 +92,16 @@ public class BrandActivity extends BaseActivity<BrandConstract.Presenter> implem
           });
         //隐藏下拉刷新和上拉加载的头/脚布局
           hideHeader();
+
+          //点击item跳转到购买页面
+          adapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+              @Override
+              public void onItemClick(BaseAdapter.VH vh, int position) {
+                  Intent intent = new Intent(BrandActivity.this, GoodInfoActivity.class);
+                  intent.putExtra("id",list.get(position).getId());
+                  startActivity(intent);
+              }
+          });
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.jiyun.myshop.model.apis;
 import com.jiyun.myshop.model.bean.AddCartBean;
 import com.jiyun.myshop.model.bean.AuthBean;
 import com.jiyun.myshop.model.bean.BrandBean;
+import com.jiyun.myshop.model.bean.CartBean;
 import com.jiyun.myshop.model.bean.CatalogBean;
 import com.jiyun.myshop.model.bean.CatalogByIdBean;
 import com.jiyun.myshop.model.bean.CategoryBottom;
@@ -76,5 +77,8 @@ public interface MyServer {
     @FormUrlEncoded
     Flowable<AddCartBean> addCart(@Field("goodsId") int goodsId, @Field("number") int number, @Field("productId") int productId);
 
+    //获取购物车数据
+    @GET("cart/index")
+    Flowable<CartBean> getCartInfo();
 
 }
