@@ -94,7 +94,8 @@ public class TopicDetailActivity extends BaseActivity<TopicDetailConstract.Prese
 
     public void getWebView(TopicDetailBean bean){
         String css_str = getResources().getString(R.string.css_goods2);
-        String content = bean.getData().getContent().replace("//","http://").replace("\n","<br/>");
+        String content = bean.getData().getContent().replaceAll("//","http://").replaceAll("\n","</p>").replaceAll("<img","<p><img");
+        content = content.replace("<img", "<img style=\"display:        ;max-width:100%;\"");
         Log.e("TAG","content: "+content);
         StringBuilder sb = new StringBuilder();
         sb.append("<html><head>");

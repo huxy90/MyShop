@@ -23,6 +23,7 @@ public class HomeBean {
          public int currentType;
          public String title;
          public T data;
+         public T dataBean;
 
          @Override
          public int getItemType() {
