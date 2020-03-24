@@ -3,59 +3,86 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <q.rorbin.verticaltablayout.VerticalTabLayout
-        android:id="@+id/tab"
-        android:layout_width="80dp"
-        android:layout_height="match_parent"
-        app:indicator_width="2dp"
-        app:tab_mode="scrollable"
-        app:tab_height="50dp"/>
+    <LinearLayout
+        android:id="@+id/ll_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/shape_search_bg"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_search"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="商品搜索，共239款好物" />
+    </LinearLayout>
 
     <View
-        android:id="@+id/line_view"
-        android:layout_width="0.5dp"
-        android:layout_height="match_parent"
-        android:background="@color/c_d1cdd1"/>
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/bg"
+        android:layout_marginTop="@dimen/dp_5"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <RelativeLayout
+        android:orientation="horizontal">
+        <q.rorbin.verticaltablayout.VerticalTabLayout
+            android:id="@+id/tab"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            app:indicator_width="2dp"
+            app:tab_mode="scrollable"
+            app:tab_height="50dp"/>
+
+        <View
+            android:id="@+id/line_view"
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/c_d1cdd1"/>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/iv"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_margin="10dp"
-                android:scaleType="centerCrop" />
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_margin="10dp"
+                    android:scaleType="centerCrop" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_frontname"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_frontname"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:layout_centerInParent="true"/>
-        </RelativeLayout>
+                android:text="居家分类"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_margin="15dp"
+                />
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="居家分类"
-            android:textSize="12sp"
-            android:gravity="center"
-            android:layout_margin="15dp"
-            />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rl_View"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingRight="20dp"
-            />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rl_View"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="20dp"
+                />
+        </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

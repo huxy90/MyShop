@@ -11,6 +11,7 @@ import com.jiyun.myshop.model.bean.CommentBean;
 import com.jiyun.myshop.model.bean.DelCarInfo;
 import com.jiyun.myshop.model.bean.GoodInfoBean;
 import com.jiyun.myshop.model.bean.GoodInfoBo;
+import com.jiyun.myshop.model.bean.GoodListBean;
 import com.jiyun.myshop.model.bean.HomeBean;
 import com.jiyun.myshop.model.bean.TopicBean;
 import com.jiyun.myshop.model.bean.TopicDetailBean;
@@ -86,6 +87,11 @@ public interface MyServer {
     @POST("cart/delete")
     @FormUrlEncoded
     Flowable<DelCarInfo> delCart(@Field("productIds") int productIds);
+
+    //搜索
+    @GET("goods/list")
+    Flowable<GoodListBean> getGoodsList(@Query("keyword") String keyword, @Query("page") int page
+            , @Query("size") int size, @Query("sort") String sort, @Query("order") String order, @Query("categoryId") int categoryId);
 
 
 }

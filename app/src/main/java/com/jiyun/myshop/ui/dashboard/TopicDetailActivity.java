@@ -79,7 +79,10 @@ public class TopicDetailActivity extends BaseActivity<TopicDetailConstract.Prese
 
     @Override
     public void getTopicDetailReturn(TopicDetailBean bean) {
-        getWebView(bean);
+        if(!"".equals(bean.getData().getContent())){
+            getWebView(bean);
+        }
+
     }
 
     @Override

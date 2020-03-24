@@ -153,13 +153,15 @@ public class GoodInfoActivity extends BaseActivity<GoodInfoConstract.Presenter> 
         iniPopupWindow(bean);
         //轮播图
         List<GoodInfoBean.DataBeanX.GalleryBean> gallery = bean.getData().getGallery();
-        banner.setImages(gallery).setImageLoader(new ImageLoader() {
-            @Override
-            public void displayImage(Context context, Object path, ImageView imageView) {
-                GoodInfoBean.DataBeanX.GalleryBean bean = (GoodInfoBean.DataBeanX.GalleryBean)path;
-                Glide.with(GoodInfoActivity.this).load(bean.getImg_url()).into(imageView);
-            }
-        }).start();
+        if(gallery.size() > 0){
+            banner.setImages(gallery).setImageLoader(new ImageLoader() {
+                @Override
+                public void displayImage(Context context, Object path, ImageView imageView) {
+                    GoodInfoBean.DataBeanX.GalleryBean bean = (GoodInfoBean.DataBeanX.GalleryBean)path;
+                    Glide.with(GoodInfoActivity.this).load(bean.getImg_url()).into(imageView);
+                }
+            }).start();
+        }
         //标题
         GoodInfoBean.DataBeanX.InfoBean info = bean.getData().getInfo();
         tv_name.setText(info.getName());
@@ -167,33 +169,37 @@ public class GoodInfoActivity extends BaseActivity<GoodInfoConstract.Presenter> 
         tv_price.setText("¥"+info.getRetail_price());
         //商品参数
         List<GoodInfoBean.DataBeanX.AttributeBean> attribute = bean.getData().getAttribute();
-        for(GoodInfoBean.DataBeanX.AttributeBean abean : attribute){
-            View view = LayoutInflater.from(this).inflate(R.layout.param_item,null);
-            TextView tv_one = view.findViewById(R.id.tv_one);
-            TextView tv_two = view.findViewById(R.id.tv_two);
-            tv_one.setText(abean.getName());
-            tv_two.setText(abean.getValue());
-            ll_param.addView(view);
+        if(attribute.size() > 0){
+            for(GoodInfoBean.DataBeanX.AttributeBean abean : attribute){
+                View view = LayoutInflater.from(this).inflate(R.layout.param_item,null);
+                TextView tv_one = view.findViewById(R.id.tv_one);
+                TextView tv_two = view.findViewById(R.id.tv_two);
+                tv_one.setText(abean.getName());
+                tv_two.setText(abean.getValue());
+                ll_param.addView(view);
+            }
         }
         //webview
-        String css_str = getResources().getString(R.string.css_goods);
-        StringBuilder sb = new StringBuilder();
-        sb.append("<html><head>");
-        sb.append("<style>"+css_str+"</style></head><body>");
-        sb.append(info.getGoods_desc()+"</body></html>");
-        webView.loadData(sb.toString(),"text/html","utf-8");
-
+        if(!"".equals(info.getGoods_desc()) && info.getGoods_desc() != null){
+            String css_str = getResources().getString(R.string.css_goods);
+            StringBuilder sb = new StringBuilder();
+            sb.append("<html><head>");
+            sb.append("<style>"+css_str+"</style></head><body>");
+            sb.append(info.getGoods_desc()+"</body></html>");
+            webView.loadData(sb.toString(),"text/html","utf-8");
+        }
         //常见问题
         List<GoodInfoBean.DataBeanX.IssueBean> issue = bean.getData().getIssue();
-        for(GoodInfoBean.DataBeanX.IssueBean ibean : issue){
-            View view = LayoutInflater.from(this).inflate(R.layout.issue_item,null);
-            TextView tv_one = view.findViewById(R.id.tv_one);
-            TextView tv_two = view.findViewById(R.id.tv_two);
-            tv_one.setText(ibean.getQuestion());
-            tv_two.setText(ibean.getAnswer());
-            ll_issue.addView(view);
+        if(issue.size() > 0){
+            for(GoodInfoBean.DataBeanX.IssueBean ibean : issue){
+                View view = LayoutInflater.from(this).inflate(R.layout.issue_item,null);
+                TextView tv_one = view.findViewById(R.id.tv_one);
+                TextView tv_two = view.findViewById(R.id.tv_two);
+                tv_one.setText(ibean.getQuestion());
+                tv_two.setText(ibean.getAnswer());
+                ll_issue.addView(view);
+            }
         }
-
     }
 
     @Override

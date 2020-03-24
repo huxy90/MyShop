@@ -101,8 +101,8 @@ public class LoginActivity extends BaseActivity<LoginConstract.Presenter> implem
 
     @Override
     public void loginReturn(AuthBean bean) {
-        String token = bean.getData().getToken();
-        SpUtils.getInstance().setValue("token",token);
+        SpUtils.getInstance().setValue("avatar",bean.getData().getUserInfo().getAvatar());
+        SpUtils.getInstance().setValue("nickname",bean.getData().getUserInfo().getNickname());
         finish();
     }
 }

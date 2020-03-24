@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -43,6 +44,7 @@ import java.util.List;
  */
 public class NotificationsFragment extends BaseFragment<CatalogConstract.Presenter> implements CatalogConstract.View, VerticalTabLayout.OnTabSelectedListener {
 
+    LinearLayout ll_search;//搜索
     VerticalTabLayout mTab;
     ImageView iv;
     TextView tv_frontname;
@@ -64,6 +66,7 @@ public class NotificationsFragment extends BaseFragment<CatalogConstract.Present
 
     @Override
     protected void initView() {
+        ll_search = getView().findViewById(R.id.ll_search);
         mTab = getView().findViewById(R.id.tab);
         iv = getView().findViewById(R.id.iv);
         tv_frontname = getView().findViewById(R.id.tv_frontname);
@@ -82,6 +85,14 @@ public class NotificationsFragment extends BaseFragment<CatalogConstract.Present
                 //intent.putExtra("cid",rByIdlist.get(0).getId());
                 intent.putExtra("data", (Serializable) rlByIdAdapter.mDatas);
                 intent.putExtra("position",position);
+                startActivity(intent);
+            }
+        });
+        //点击搜索框跳转到搜索页面
+        ll_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
                 startActivity(intent);
             }
         });
