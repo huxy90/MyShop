@@ -13,7 +13,8 @@
         android:id="@+id/rel_car_lead"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_60">
 
         <CheckBox
             android:id="@+id/car_cb_all"
@@ -49,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
-            android:textSize="30sp"
+            android:textSize="@dimen/sp_16"
             android:layout_toLeftOf="@id/car_btn_car_press"
             android:text="编辑"/>
 

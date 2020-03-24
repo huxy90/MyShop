@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.jiyun.myshop.R;
 import com.jiyun.myshop.base.BaseActivity;
@@ -203,6 +205,7 @@ public class GoodInfoActivity extends BaseActivity<GoodInfoConstract.Presenter> 
     @Override
     public void addCartReturn(AddCartBean bean) {
           pwMyPopWindow.dismiss();
+          Toast.makeText(GoodInfoActivity.this,"添加成功",Toast.LENGTH_LONG).show();
     }
 
     EditText et_num;//购买个数

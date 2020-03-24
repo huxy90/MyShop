@@ -8,6 +8,7 @@ import com.jiyun.myshop.model.bean.CatalogBean;
 import com.jiyun.myshop.model.bean.CatalogByIdBean;
 import com.jiyun.myshop.model.bean.CategoryBottom;
 import com.jiyun.myshop.model.bean.CommentBean;
+import com.jiyun.myshop.model.bean.DelCarInfo;
 import com.jiyun.myshop.model.bean.GoodInfoBean;
 import com.jiyun.myshop.model.bean.GoodInfoBo;
 import com.jiyun.myshop.model.bean.HomeBean;
@@ -80,5 +81,11 @@ public interface MyServer {
     //获取购物车数据
     @GET("cart/index")
     Flowable<CartBean> getCartInfo();
+
+    //删除购物车数据
+    @POST("cart/delete")
+    @FormUrlEncoded
+    Flowable<DelCarInfo> delCart(@Field("productIds") int productIds);
+
 
 }

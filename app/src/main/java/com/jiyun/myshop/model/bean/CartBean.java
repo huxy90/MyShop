@@ -1,8 +1,9 @@
 package com.jiyun.myshop.model.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CartBean {
+public class CartBean implements Serializable{
     /**
      * errno : 0
      * errmsg :
@@ -37,7 +38,7 @@ public class CartBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * cartList : [{"id":162,"user_id":5,"session_id":"1","goods_id":1116033,"goods_sn":"1116033","product_id":171,"goods_name":"多功能人体工学转椅","market_price":1399,"retail_price":1399,"number":3,"goods_specifition_name_value":"","goods_specifition_ids":"","checked":1,"list_pic_url":"http://yanxuan.nosdn.127.net/f1dbf1d9967c478ee6def81ed40734a2.png"}]
          * cartTotal : {"goodsCount":3,"goodsAmount":4197,"checkedGoodsCount":3,"checkedGoodsAmount":4197}
@@ -62,7 +63,7 @@ public class CartBean {
             this.cartList = cartList;
         }
 
-        public static class CartTotalBean {
+        public static class CartTotalBean implements Serializable{
             /**
              * goodsCount : 3
              * goodsAmount : 4197
@@ -108,7 +109,7 @@ public class CartBean {
             }
         }
 
-        public static class CartListBean {
+        public static class CartListBean implements Serializable {
             /**
              * id : 162
              * user_id : 5
