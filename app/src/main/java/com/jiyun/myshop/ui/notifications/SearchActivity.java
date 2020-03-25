@@ -45,7 +45,7 @@ public class SearchActivity extends BaseActivity<SearchConstract.Presenter> impl
     private ArrayList<GoodListBean.DataBeanX.DataBean> list;
     private GoodListAdapter adapter;
     private ArrayList<String> historyList;
-    private String keyword, sort = "default", order = "desc";
+    private String sort = "default", order = "desc";
     private int page = 1, size = 100, categoryId = 0;
 
     @Override
@@ -73,7 +73,7 @@ public class SearchActivity extends BaseActivity<SearchConstract.Presenter> impl
                     if (list != null && list.size() > 0) {
                         list.clear();
                     }
-                    initData2();
+                    initData();
                     return true;
                 }
                 return false;
@@ -95,10 +95,6 @@ public class SearchActivity extends BaseActivity<SearchConstract.Presenter> impl
 
     @Override
     protected void initData() {
-
-    }
-
-    protected void initData2() {
         rvSearchResult.setVisibility(View.GONE);
         tvSearchNoResult.setVisibility(View.GONE);
         if (!TextUtils.isEmpty(keyWord)) {
@@ -116,15 +112,17 @@ public class SearchActivity extends BaseActivity<SearchConstract.Presenter> impl
                         etSearch.setText(lable.getText().toString());
                     }
                 });
-
                 fl.addView(lable);
             }
-            presenter.getGoodList(keyword,page,size,sort,order,categoryId);
+            if(!"".equals(keyWord)){
+                presenter.getGoodList(keyWord,page,size,sort,order,categoryId);
+            }
         } else {
             tvHistory.setVisibility(View.VISIBLE);
             fl.setVisibility(View.VISIBLE);
         }
     }
+
     @OnClick(R.id.tv_cancel)
     public void onViewClicked() {
         finish();
@@ -135,8 +133,7 @@ public class SearchActivity extends BaseActivity<SearchConstract.Presenter> impl
         List<GoodListBean.DataBeanX.DataBean> data = bean.getData().getData();
         if (data.size() > 0) {
             rvSearchResult.setVisibility(View.VISIBLE);
-            //list.addAll(data);
-            adapter.updateMoreList(data);
+            adapter.updateList(data);
         } else {
             tvSearchNoResult.setVisibility(View.VISIBLE);
         }

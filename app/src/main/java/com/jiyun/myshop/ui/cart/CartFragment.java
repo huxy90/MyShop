@@ -30,6 +30,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * 购物车
+ */
 public class CartFragment extends BaseFragment<CartConstract.Presenter> implements CartConstract.View, View.OnClickListener {
 
     TextView car_tv_count_price;//总价

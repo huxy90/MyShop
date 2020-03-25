@@ -1,5 +1,7 @@
 package com.jiyun.myshop.presenter.notification;
 
+import android.util.Log;
+
 import com.jiyun.myshop.base.BasePresenter;
 import com.jiyun.myshop.common.ResponseSubscriber;
 import com.jiyun.myshop.interfaces.notification.CatalogConstract;
@@ -19,6 +21,7 @@ public class SearchPresenter extends BasePresenter<SearchConstract.View> impleme
                 .subscribeWith(new ResponseSubscriber<GoodListBean>(mView){
                     @Override
                     public void onNext(GoodListBean bean) {
+                        Log.e("TAG",bean+"-------");
                         if(bean.getErrno() == 0){
                             mView.getGoodListReturn(bean);
                         }else {

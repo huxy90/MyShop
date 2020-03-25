@@ -16,6 +16,7 @@ import java.util.List;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 下单
@@ -56,6 +57,11 @@ public class OrderActivity extends BaseActivity<OrderConstract.Presenter> implem
         adapter = new OrderAdapter(list,this);
         rl_View.setLayoutManager(new LinearLayoutManager(this));
         rl_View.setAdapter(adapter);
+    }
+
+    @OnClick(R.id.rl_address)
+    public void onClick(){
+
     }
 
     @Override

@@ -29,12 +29,9 @@ public class DashboardFragment extends BaseFragment<TopicConstract.Presenter> im
     int page = 1;
     int size = 10;
 
-    //@BindView(R.id.tv_up)
     TextView mTvUp;
-    //@BindView(R.id.tv_down)
     TextView mTvDown;
     TopicAdapter adapter;
-    //@BindView(R.id.rl_View)
     RecyclerView mRlView;
 
     @Override

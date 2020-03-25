@@ -94,4 +94,6 @@ public interface MyServer {
             , @Query("size") int size, @Query("sort") String sort, @Query("order") String order, @Query("categoryId") int categoryId);
 
 
+
+
 }

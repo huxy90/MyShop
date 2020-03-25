@@ -1,12 +1,10 @@
-/*package com.jiyun.myshop.ui.home;
+package com.jiyun.myshop.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -14,138 +12,6 @@ import com.jiyun.myshop.R;
 import com.jiyun.myshop.base.BaseAdapter;
 import com.jiyun.myshop.base.BaseFragment;
 import com.jiyun.myshop.interfaces.home.HomeConstract;
-import com.jiyun.myshop.model.bean.HomeBean;
-import com.jiyun.myshop.presenter.home.HomePresenter;
-import com.jiyun.myshop.ui.home.adapter.BrandAdapter;
-import com.jiyun.myshop.ui.home.adapter.HomeAdapter;
-import com.jiyun.myshop.ui.home.adapter.HotAdapter;
-import com.jiyun.myshop.ui.home.adapter.NewGoodsAdapter;
-import com.youth.banner.Banner;
-import com.youth.banner.loader.ImageLoader;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-public class HomeFragment extends BaseFragment<HomeConstract.Presenter> implements HomeConstract.View {
-
-    RecyclerView rl_View;
-    List<HomeBean.HomeListBean> list;
-    HomeAdapter homeAdapter;
-//    private BrandAdapter bAdapter;
-//    private NewGoodsAdapter nAdapter;
-//    private HotAdapter hAdapter;
-
-    @Override
-    protected int getLayout() {
-        return R.layout.fragment_home;
-    }
-
-    @Override
-    protected HomeConstract.Presenter createPresenter() {
-        return new HomePresenter();
-    }
-
-    @Override
-    protected void initView() {
-        rl_View = (RecyclerView)getView().findViewById(R.id.rl_View);
-
-        list = new ArrayList<>();
-        rl_View.setLayoutManager(new GridLayoutManager(context,2));
-        homeAdapter = new HomeAdapter(list,context);
-        homeAdapter.bindToRecyclerView(rl_View);
-        //监听计算当前条目占用的列表
-        homeAdapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(GridLayoutManager gridLayoutManager, int i) {
-                int type = list.get(i).getItemType();
-                switch (type){
-                    //case HomeBean.HomeListBean.TYPE_BANNER:
-                    case HomeBean.HomeListBean.TYPE_TITLE:
-                    case HomeBean.HomeListBean.TYPE_CHANNEL:
-                    case HomeBean.HomeListBean.TYPE_HOTGOOD:
-                    case HomeBean.HomeListBean.TYPE_TOPIC:
-                    case HomeBean.HomeListBean.TYPE_VIEW_LINE:
-                        return 2;
-                    case HomeBean.HomeListBean.TYPE_BRAND:
-                    case HomeBean.HomeListBean.TYPE_NEWGOOD:
-                    case HomeBean.HomeListBean.TYPE_CATEGORY:
-                        return 1;
-                }
-                return 0;
-            }
-        });
-        homeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                int itemViewType = adapter.getItemViewType(position);
-                Toast.makeText(context,itemViewType+"---"+position,Toast.LENGTH_LONG).show();
-
-                //banner    p: 0
-                //channel:  p：1
-                //brand:    p: 3--6  type: 2,3,3,3
-                //newgood:  p: 8-11  8 --- 8 + newgood.size-1
-                //hotgood:14-16  10 + newgood.size  -- 10 + newgood.size + hotgood.size-1
-                //居家：  22-28  15 + newgood.size + hotgood.size -- 15 + newgood.size + hotgood.size + 居家.size - 1
-                //
-
-            }
-        });
-
-    }
-
-    @Override
-    protected void initData() {
-        presenter.getHomeData();
-    }
-
-    @Override
-    public void getHomeDataReturn(List<HomeBean.HomeListBean> result) {
-        addHeader(result.remove(0));
-        list.addAll(result);
-        homeAdapter.notifyDataSetChanged();
-    }
-
-    private void addHeader(HomeBean.HomeListBean head){
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_item_banner,null);
-        Banner banner = view.findViewById(R.id.banner);
-        List<String> imgs = new ArrayList<>();
-        for (HomeBean.DataBean.BannerBean item : (List<HomeBean.DataBean.BannerBean>) head.data) {
-            imgs.add(item.getImage_url());
-        }
-        banner.tag = "true";
-        banner.setImageLoader(new ImageLoader() {
-            @Override
-            public void displayImage(Context context, Object path, ImageView imageView) {
-                Glide.with(context).load(path).dontAnimate().into(imageView);
-            }
-        });
-        banner.setImages(imgs);
-        banner.start();
-        homeAdapter.addHeaderView(view);
-    }
-}
-*/
-
-
-  package com.jiyun.myshop.ui.home;
-
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.jiyun.myshop.R;
-import com.jiyun.myshop.base.BaseAdapter;
-import com.jiyun.myshop.base.BaseFragment;
-import com.jiyun.myshop.interfaces.home.HomeConstract;
-import com.jiyun.myshop.model.bean.CatalogByIdBean;
 import com.jiyun.myshop.model.bean.HomeBean;
 import com.jiyun.myshop.presenter.home.HomePresenter;
 import com.jiyun.myshop.ui.dashboard.TopicDetailActivity;
@@ -155,8 +21,8 @@ import com.jiyun.myshop.ui.home.adapter.HomeAdapter;
 import com.jiyun.myshop.ui.home.adapter.HotAdapter;
 import com.jiyun.myshop.ui.home.adapter.NewGoodsAdapter;
 import com.jiyun.myshop.ui.home.adapter.TopicAdapter;
-import com.jiyun.myshop.ui.notifications.CategoryActivity;
 import com.jiyun.myshop.ui.notifications.GoodInfoActivity;
+import com.jiyun.myshop.ui.notifications.SearchActivity;
 import com.jiyun.myshop.utils.MaxRecyclerView;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -164,13 +30,16 @@ import com.youth.banner.loader.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
+/**
+ * 首页
+ */
 public class HomeFragment extends BaseFragment<HomeConstract.Presenter> implements HomeConstract.View {
 
+    LinearLayout ll_search;//搜索
     Banner banner;//轮播图
     MaxRecyclerView rl_channel;//
     MaxRecyclerView rl_brand;//品牌制造商
@@ -197,6 +66,7 @@ public class HomeFragment extends BaseFragment<HomeConstract.Presenter> implemen
 
     @Override
     protected void initView() {
+        ll_search = getView().findViewById(R.id.ll_search);
         banner = (Banner)getView().findViewById(R.id.banner);
         rl_channel = (MaxRecyclerView)getView().findViewById(R.id.rl_channel);
         rl_brand = (MaxRecyclerView)getView().findViewById(R.id.rl_brand);
@@ -205,18 +75,15 @@ public class HomeFragment extends BaseFragment<HomeConstract.Presenter> implemen
         rl_topic = (MaxRecyclerView)getView().findViewById(R.id.rl_topic);
         rl_category = (MaxRecyclerView)getView().findViewById(R.id.rl_category);
         //解决卡顿问题
-        rl_channel.setHasFixedSize(true);
-        rl_channel.setNestedScrollingEnabled(false);
-        rl_brand.setHasFixedSize(true);
-        rl_brand.setNestedScrollingEnabled(false);
-        rl_newGooods.setHasFixedSize(true);
-        rl_newGooods.setNestedScrollingEnabled(false);
-        rl_hotGooods.setHasFixedSize(true);
-        rl_hotGooods.setNestedScrollingEnabled(false);
-        rl_topic.setHasFixedSize(true);
-        rl_topic.setNestedScrollingEnabled(false);
-        rl_category.setHasFixedSize(true);
-        rl_category.setNestedScrollingEnabled(false);
+        initRyView();
+        //点击搜索框跳转到搜索页面
+        ll_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //channel
         List<HomeBean.DataBean.ChannelBean> cList = new ArrayList<>();
@@ -282,10 +149,6 @@ public class HomeFragment extends BaseFragment<HomeConstract.Presenter> implemen
         cAdapter.addOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseAdapter.VH vh, int position) {
-//                Intent intent = new Intent(context, CategoryActivity.class);
-//                intent.putExtra("cid",cList.get(position).getId());
-//                intent.putExtra("position",position);
-//                startActivity(intent);
             }
         });
         //品牌商
@@ -324,6 +187,22 @@ public class HomeFragment extends BaseFragment<HomeConstract.Presenter> implemen
                 startActivity(intent);
             }
         });
+    }
+
+    private void initRyView() {
+        //解决卡顿问题
+        rl_channel.setHasFixedSize(true);
+        rl_channel.setNestedScrollingEnabled(false);
+        rl_brand.setHasFixedSize(true);
+        rl_brand.setNestedScrollingEnabled(false);
+        rl_newGooods.setHasFixedSize(true);
+        rl_newGooods.setNestedScrollingEnabled(false);
+        rl_hotGooods.setHasFixedSize(true);
+        rl_hotGooods.setNestedScrollingEnabled(false);
+        rl_topic.setHasFixedSize(true);
+        rl_topic.setNestedScrollingEnabled(false);
+        rl_category.setHasFixedSize(true);
+        rl_category.setNestedScrollingEnabled(false);
     }
 
     @Override

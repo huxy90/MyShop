@@ -16,7 +16,7 @@
             android:id="@+id/iv_tx"
             android:layout_width="@dimen/dp_80"
             android:layout_height="@dimen/dp_80"
-            android:src="@drawable/ic_menu_me_nor" />
+            android:src="@mipmap/tx" />
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
             android:id="@+id/iv_next"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
-            android:src="@drawable/ic_menu_me_nor"
+            android:src="@mipmap/wen"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
@@ -55,7 +55,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_task_us"/>
+                android:src="@mipmap/homeyhy"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_task_us"/>
+                android:src="@mipmap/oowncard"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_task_us"/>
+                android:src="@mipmap/oownpacket"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_task_us"/>
+                android:src="@mipmap/homefa"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -173,7 +173,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_task_us"/>
+                android:src="@mipmap/oownpacket"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -201,7 +201,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_task_us"/>
+                android:src="@mipmap/oownvip"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -235,7 +235,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_task_us"/>
+                android:src="@mipmap/oassign"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -263,7 +263,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_task_us"/>
+                android:src="@mipmap/oownpacket"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -291,7 +291,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_task_us"/>
+                android:src="@mipmap/ic_task_s"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -325,7 +325,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_task_us"/>
+                android:src="@mipmap/homefa"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -353,7 +353,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_task_us"/>
+                android:src="@mipmap/oassign"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

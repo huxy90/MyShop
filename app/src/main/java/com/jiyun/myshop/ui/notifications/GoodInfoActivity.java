@@ -228,7 +228,9 @@ public class GoodInfoActivity extends BaseActivity<GoodInfoConstract.Presenter> 
             et_num = (EditText) layout.findViewById(R.id.et_num);
             et_num.setText("1");
             tv_price.setText("¥"+bean.getData().getInfo().getRetail_price());
-            Glide.with(this).load(bean.getData().getGallery().get(0).getImg_url()).into(iv);
+            if(bean.getData().getGallery().size() > 0){
+                Glide.with(this).load(bean.getData().getGallery().get(0).getImg_url()).into(iv);
+            }
             //监听
             iv_close.setOnClickListener(this);
             tv_add.setOnClickListener(this);
